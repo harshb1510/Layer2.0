@@ -9,6 +9,7 @@ import ClaimNft from "./Pages/claimNft.jsx";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import Home from "./Pages/Home.jsx";
+import Invest from "./Pages/Invest.jsx";
 
 
 
@@ -23,6 +24,7 @@ const App = () => (
         <Route path ='/slotexit' element={<SlotExit />} />
         <Route path="/nftMint" element={<NFTMint/>} />
         <Route path="/claimNft" element={<ClaimNft/>} />
+        <Route path='/invest'element={<Invest/>}/>
       </Routes>
       <ToastContainer/>
     </Router>

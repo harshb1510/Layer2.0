@@ -48,14 +48,14 @@ export default function Signup() {
         <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
           <div class="w-full bg-white  border rounded-lg shadow-lg dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
             <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-              <h1 class=" flex justify-center text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+              <h1 class=" flex justify-center text-xl font-bold leading-tight tracking-tight text-yellow-500 md:text-2xl">
                 Create your account
               </h1>
               <form class="space-y-4 md:space-y-6" action="#">
                 <div>
                   <label
                     for="username"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    class="block mb-2 text-sm font-medium text-yellow-500"
                   >
                     Username
                   </label>
@@ -72,14 +72,14 @@ export default function Signup() {
                 <div>
                   <label
                     for="name"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    class="block mb-2 text-sm font-medium text-yellow-500"
                   >
                 Full Name
                   </label>
                   <input
                     type="name"
                     placeholder="Full Name"
-                    class="bg-white border border-gray-800 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 "
+                    class="bg-white border  text-white sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 "
                     required=""
                     value={formData.fullName}
                     name="fullName"
@@ -89,14 +89,14 @@ export default function Signup() {
                 <div>
                   <label
                     for="email"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    class="block mb-2 text-sm font-medium text-yellow-500 "
                   >
                     Email
                   </label>
                   <input
                     type="email"
                     id="email"
-                    class="bg-white border border-gray-800 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 "
+                    class="bg-white border  text-white sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 "
                     placeholder="Email"
                     required=""
                     value={formData.email}
@@ -107,7 +107,7 @@ export default function Signup() {
                 <div>
                   <label
                     for="password"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    class="block mb-2 text-sm font-medium text-yellow-500"
                   >
                     Password
                   </label>
@@ -115,7 +115,7 @@ export default function Signup() {
                     type="password"
                     id="password"
                     placeholder="••••••••"
-                    class="bg-white border border-gray-800 text-gray-900 sm:text-sm rounded-lg  block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 "
+                    class="bg-white border text-white border-gray-800  sm:text-sm rounded-lg  block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 "
                     required=""
                     value={formData.password}
                     name="password"
@@ -126,7 +126,7 @@ export default function Signup() {
                 <button
                   type="submit"
                   onClick={handleSubmit}
-                  class="w-full bg-cyan-500 hover:bg-cyan-600 text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                  class="w-full bg-yellow-600 hover:bg-yellow-700 text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                 >
                   Signup
                 </button>
@@ -134,7 +134,7 @@ export default function Signup() {
                   Already have an account?{" "}
                   <Link 
                     to='/login'
-                    class=" ml-2 font-medium text-cyan-500 hover:text-cyan-600 hover:underline dark:text-primary-500"
+                    class=" ml-2 font-medium text-yellow-600 hover:text-yellow-500 hover:underline dark:text-primary-500"
                   >
                     Login here
                   </Link>
