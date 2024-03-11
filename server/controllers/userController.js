@@ -54,78 +54,41 @@ const getUser = async (req, res) => {
   }
 };
 
-const addWallet = async (req, res) => {
-  try {
-    const userId = req.headers["x-auth-token"];
-    if (userId) {
-      const wallet = req.body.wallet;
-      const updateResult = await User.updateOne({ _id: userId }, { wallet });
-      const user = await User.findOne({ _id: userId });
-      if (updateResult.modifiedCount > 0) {
-        return res.status(200).send({ user });
-      } else {
-        return res
-          .status(404)
-          .send({ error: "No matching record found or no changes made." });
-      }
+const sendCrypto = async (req, res) => {
+  const { amount, receiverId } = req.body;
+  const senderId = req.body.senderId;
+  const sender = await User.findOne({ _id: senderId });
+  if (sender.wallet >= amount) {
+    const receiver = await User.findOne({ _id: receiverId });
+    if (receiver) {
+      receiver.wallet += amount;
+      sender.wallet -= amount;
+      await receiver.save();
+      await sender.save();
+      res.status(200).send({ message: "Transaction Successful" });
     } else {
-      return res.status(401).send({ error: "User Not Found...!" });
+      res.status(404).send({ message: "Receiver Not Found" });
     }
-  } catch (error) {
-    console.error(error);
-    return res.status(500).send({ error });
   }
-};
+}
 
-const updatePassword = async (req, res) => {
-  const id = req.body.id;
-  const { oldPassword, confirmnewPassword } = req.body.formData;
-  try {
-    const user = await User.findById(id);
-    if (!user) {
-      console.log("user not found");
-      return res.status(404).json({ message: "User not found" });
-    }
-    const isPasswordValid = await user.matchPassword(oldPassword);
-    if (!isPasswordValid) {
-      return res.status(401).json({ message: "Invalid old password" });
-    }
-    user.password = confirmnewPassword;
+const sendCryptoUpi = async (req, res) => {
+  const { amount, userId } = req.body;
+  const user = await User.findOne({ _id: userId });
+  if (user) {
+    user.wallet += amount;
     await user.save();
-    res.status(200).json({ message: "Password updated successfully" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(200).send({ message: "Transaction Successful" });
+  } else {
+    res.status(404).send({ message: "User Not Found" });
   }
-};
+}
 
-const updateProfile = async (req, res) => {
-  try {
-    const userId = req.user._id;
-    if (userId) {
-      const body = req.body.form;
-      const updateResult = await User.updateOne({ _id: userId }, body);
-      if (updateResult.modifiedCount > 0) {
-        return res.status(200).send({ msg: "Record Updated...!" });
-      } else {
-        return res
-          .status(404)
-          .send({ error: "No matching record found or no changes made." });
-      }
-    } else {
-      return res.status(401).send({ error: "User Not Found...!" });
-    }
-  } catch (error) {
-    console.error(error);
-    return res.status(500).send({ error });
-  }
-};
 
 module.exports = {
   loginUser,
   registerUser,
   getUser,
-  addWallet,
-  updatePassword,
-  updateProfile,
+  sendCrypto,
+  sendCryptoUpi,
 };

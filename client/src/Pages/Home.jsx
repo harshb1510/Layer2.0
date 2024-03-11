@@ -6,6 +6,18 @@ import { useEffect } from 'react';
 
 
 const Home = () => {
+  useEffect(() => {
+    const getUser = async () => {
+      const user = JSON.parse(localStorage.getItem("user"));
+      const data = await axios.get("http://localhost:8000/users/getUser", {
+        headers: {
+          "x-auth-token": user._id,
+        },
+      });
+      console.log(data.data.user);
+    };
+    getUser();
+  }, []);
 
 
 

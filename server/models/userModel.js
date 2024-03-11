@@ -20,32 +20,11 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  lender: {
-    type: Boolean,
-    default: false,
-  },
-  pic: {
-    type: String,
-    default:
-      "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
-  },
-  renter: {
-    type: Boolean,
-    default: false,
-  },
-  caronrent: {
-    type: Boolean,
-    default: false,
-  },
-  wallet: {
-    type: String,
-    default: "",
-  },
-  amountEarned: {
+  staked: {
     type: Number,
     default: 0,
   },
-  cryptoAmount: {
+  wallet: {
     type: Number,
     default: 0,
   },
