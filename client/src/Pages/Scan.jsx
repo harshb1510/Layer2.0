@@ -10,67 +10,9 @@ const Scan = () => {
   const [payableAmount, setPayableAmount] = useState(0);
   const [usdtAmount, setUsdtAmount] = useState("");
   const [showModal, setShowModal] = useState(false);
-  
-  
-    
 
-  React.useEffect(() => {
-    const loadRazorpayScript = async () => {
-      const script = document.createElement("script");
-      script.src = "https://checkout.razorpay.com/v1/checkout.js";
-      script.async = true;
-      script.onload = () => {};
-      document.body.appendChild(script);
-    };
 
-    loadRazorpayScript();
-  }, []);
 
-  const initPayment = (data) => {
-    const options = {
-      key: "rzp_test_rrpFDSyVYUuEE4",
-      amount: data.amount,
-      currency: data.currency,
-      order_id: data.orderDetails.razorpayOrderId,
-      handler: async (response) => {
-        try {
-          const verifyUrl = `http://localhost:8000/payment/verify`;
-
-          const verifyData = {
-            razorpay_order_id: response.razorpay_order_id,
-            razorpay_payment_id: response.razorpay_payment_id,
-            razorpay_signature: response.razorpay_signature,
-          };
-          await axios.post(verifyUrl, verifyData);
-          await axios.post("http://localhost:8000/users/send-Crypto",{amount:data.amount,userId:userId})
-        } catch (err) {
-          console.log(err);
-        }
-      },
-      theme: {
-        color: "#3399cc",
-      },
-    };
-    const rzp1 = new window.Razorpay(options);
-    rzp1.open();
-  };
-
-  const handleProceed = async (data) => {
-    try {
-      const response = await axios.post(
-        "http://localhost:8000/payment/addBooking",
-        {
-          rentPrice: data,
-        }
-      );
-      console.log(response.data);
-      initPayment(response.data);
-      
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  
   const qrData = async (text) => {
     const deposit = JSON.parse(text);
     const user = JSON.parse(localStorage.getItem("user"));
@@ -79,11 +21,23 @@ const Scan = () => {
     setShowModal(true);
   };
 
-  const handlePayWithRazorpay = async () => {
-    setShowModal(false);
-    const inrAmount = parseFloat(usdtAmount) * 82.9; 
-    await handleProceed(inrAmount);
-  };
+  const handlePayment = async () => {
+    console.log(usdtAmount);
+    const user = JSON.parse(localStorage.getItem("user"));
+    const data = {
+      senderId: user._id,
+      receiverId: userId,
+      amount: usdtAmount,
+    };
+    const response = await axios.post("http://localhost:8000/users/sendCrypto", data);
+    console.log(response);
+    if (response.status === 200) {
+      setShowModal(false);
+      history("/dashboard");
+    }
+  }
+
+
 
   return (
     <div className="h-[400px] w-[400px] m-auto mt-[200px]">
@@ -107,10 +61,10 @@ const Scan = () => {
               onChange={(e) => setUsdtAmount(e.target.value)}
             />
             <Button
-              onClick={handlePayWithRazorpay}
+              onClick={handlePayment}
               style={{ backgroundColor: "green", color: "white" }}
             >
-              Pay with Razorpay
+              Send
             </Button>
           </div>
         </div>
