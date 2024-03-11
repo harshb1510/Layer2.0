@@ -74,9 +74,10 @@ const sendCrypto = async (req, res) => {
 
 const sendCryptoUpi = async (req, res) => {
   const { amount, userId } = req.body;
+  const crypto = parseInt(amount);
   const user = await User.findOne({ _id: userId });
   if (user) {
-    user.wallet += amount;
+    user.wallet += crypto;
     await user.save();
     res.status(200).send({ message: "Transaction Successful" });
   } else {

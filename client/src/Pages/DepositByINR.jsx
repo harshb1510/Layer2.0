@@ -51,7 +51,7 @@ const DepositByINR = () => {
           };
           await axios.post(verifyUrl, verifyData);
           await axios.post("http://localhost:8000/users/sendCryptoUpi", {
-            amount: data.amount,
+            amount: usdtAmount,
             userId: userId
           });
         } catch (err) {
