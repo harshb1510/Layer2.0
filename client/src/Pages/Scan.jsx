@@ -2,14 +2,17 @@ import React, { useState } from "react";
 import { Scanner } from "@yudiel/react-qr-scanner";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { Button, Modal } from "@mui/material";
-import makeCryptoPayment from "../utils/constants";
+import { Button, Modal, TextField } from "@mui/material";
 
-const SlotExit = () => {
+const Scan = () => {
   const history = useNavigate();
-
-  const [payableAmount, setPayableAmount] = React.useState(0);
+  const [userId, setUserId] = useState("");
+  const [payableAmount, setPayableAmount] = useState(0);
+  const [usdtAmount, setUsdtAmount] = useState("");
   const [showModal, setShowModal] = useState(false);
+  
+  
+    
 
   React.useEffect(() => {
     const loadRazorpayScript = async () => {
@@ -31,7 +34,7 @@ const SlotExit = () => {
       order_id: data.orderDetails.razorpayOrderId,
       handler: async (response) => {
         try {
-          const verifyUrl = `http://localhost:8000/listings/verify`;
+          const verifyUrl = `http://localhost:8000/payment/verify`;
 
           const verifyData = {
             razorpay_order_id: response.razorpay_order_id,
@@ -39,7 +42,7 @@ const SlotExit = () => {
             razorpay_signature: response.razorpay_signature,
           };
           await axios.post(verifyUrl, verifyData);
-          history("/admin");
+          await axios.post("http://localhost:8000/users/send-Crypto",{amount:data.amount,userId:userId})
         } catch (err) {
           console.log(err);
         }
@@ -55,7 +58,7 @@ const SlotExit = () => {
   const handleProceed = async (data) => {
     try {
       const response = await axios.post(
-        "http://localhost:8000/listings/bookings/addBooking",
+        "http://localhost:8000/payment/addBooking",
         {
           rentPrice: data,
         }
@@ -67,36 +70,19 @@ const SlotExit = () => {
       console.log(error);
     }
   };
-
+  
   const qrData = async (text) => {
-    const slotBooking = JSON.parse(text);
-    console.log(slotBooking.slotId);
-    const slotExit = await fetch("http://localhost:8000/parking/slotExit", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id: slotBooking.slotId,
-      }),
-    });
-    const data = await slotExit.json();
-    console.log(data.payableAmount);
-    setPayableAmount(data.payableAmount);
+    const deposit = JSON.parse(text);
+    const user = JSON.parse(localStorage.getItem("user"));
+    setUserId(user._id);
+    setPayableAmount(deposit.payableAmount);
     setShowModal(true);
   };
 
-  const handlePayWithRazorpay = async() => {
+  const handlePayWithRazorpay = async () => {
     setShowModal(false);
-    await handleProceed(payableAmount);
-  };
-
-  const handlePayWithWallet = async () => {
-    setShowModal(false);
-    const cryptoAmount = payableAmount * 0.011;
-    const cryptoAddress = "0xC3385be7163DA9ee64dfE1847De5dC9c8Aa88eC0";
-    await makeCryptoPayment(cryptoAddress, cryptoAmount);
-    history("/admin");
+    const inrAmount = parseFloat(usdtAmount) * 82.9; 
+    await handleProceed(inrAmount);
   };
 
   return (
@@ -114,21 +100,17 @@ const SlotExit = () => {
       <Modal open={showModal} onClose={() => setShowModal(false)}>
         <div className="modal-container bg-white fixed z-[1300]  flex items-center justify-center">
           <div className="modal-content flex flex-col justify-center items-center gap-5 p-6 ">
-            <h2>
-              Payable Amount: {payableAmount} Rs. ({payableAmount * 0.011}{" "}
-              MATIC)
-            </h2>
+            <TextField
+              label="Enter Amount in USDT"
+              variant="outlined"
+              value={usdtAmount}
+              onChange={(e) => setUsdtAmount(e.target.value)}
+            />
             <Button
               onClick={handlePayWithRazorpay}
               style={{ backgroundColor: "green", color: "white" }}
             >
               Pay with Razorpay
-            </Button>
-            <Button
-              onClick={handlePayWithWallet}
-              style={{ backgroundColor: "red", color: "white" }}
-            >
-              Pay with Wallet
             </Button>
           </div>
         </div>
@@ -137,4 +119,4 @@ const SlotExit = () => {
   );
 };
 
-export default SlotExit;
+export default Scan;

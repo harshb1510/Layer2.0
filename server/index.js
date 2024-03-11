@@ -7,6 +7,7 @@ require("dotenv").config();
 const NFT = require("./models/nftModel.js");
 
 
+
 const app = express();
 app.use(express.json());
 app.use(
@@ -96,6 +97,7 @@ app.get("/claimNft", async (req, res) => {
 
 const userRoutes = require("./routes/userRoutes");
 const nftRoutes = require("./routes/nftRoutes.js");
+const paymentRoutes = require("./routes/paymentRoutes.js");
 
 const PORT = process.env.PORT || 8000;
 dbConnect();
@@ -106,6 +108,7 @@ app.get("/", async (req, res) => {
 
 app.use("/users", userRoutes);
 app.use("/nft", nftRoutes);
+app.use("/payment",paymentRoutes);
 
 const server = app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
