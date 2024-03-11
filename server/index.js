@@ -95,8 +95,6 @@ app.get("/claimNft", async (req, res) => {
 );
 
 const userRoutes = require("./routes/userRoutes");
-const listingRoutes = require("./routes/listingRoutes.js");
-const parkSpaceRoutes = require("./routes/parkSpaceRoutes.js");
 const nftRoutes = require("./routes/nftRoutes.js");
 
 const PORT = process.env.PORT || 8000;
@@ -107,8 +105,6 @@ app.get("/", async (req, res) => {
 });
 
 app.use("/users", userRoutes);
-app.use("/listings", listingRoutes);
-app.use("/parking", parkSpaceRoutes);
 app.use("/nft", nftRoutes);
 
 const server = app.listen(PORT, () => {
