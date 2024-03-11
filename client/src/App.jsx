@@ -9,6 +9,9 @@ import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import Home from "./Pages/Home.jsx";
 import Scan from "./Pages/Scan.jsx";
+import DepositByINR from "./Pages/DepositByINR.jsx";
+
+
 
 
 
@@ -20,6 +23,7 @@ const App = () => (
         <Route path="/login" element={<Login/>} />
         <Route path="/signup" element={<Signup />} />
         <Route path ='/deposit' element={<Deposit />} />
+        <Route path= "/depositByINR" element={<DepositByINR/>}/>
         <Route path ='/scan' element={<Scan />} />
         <Route path="/nftMint" element={<NFTMint/>} />
         <Route path="/claimNft" element={<ClaimNft/>} />
