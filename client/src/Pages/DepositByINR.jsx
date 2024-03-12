@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, TextField } from '@mui/material';
 import axios from 'axios';
+import Sidebar from '../Components/Sidebar';
 
 const DepositByINR = () => {
   const [userId, setUserId] = useState("");
@@ -72,19 +73,26 @@ const DepositByINR = () => {
   };
 
   return (
-    <div className="flex flex-col items-center gap-5 p-6">
-      <TextField
-        label="Enter Amount in USDT"
-        variant="outlined"
-        value={usdtAmount}
-        onChange={(e) => setUsdtAmount(e.target.value)}
-      />
-      <Button
-        onClick={handleAddMoney}
-        style={{ backgroundColor: "green", color: "white" }}
-      >
-        Add Money
-      </Button>
+    <div className="flex justify-center items-center h-screen ">
+      <Sidebar/>
+      <div className="flex flex-col items-center gap-5 p-6 bg-black rounded-lg">
+        <TextField
+          label="Enter Amount in USDT"
+          variant="outlined"
+          value={usdtAmount}
+          onChange={(e) => setUsdtAmount(e.target.value)}
+          InputLabelProps={{ style: { color: 'white' } }} 
+          inputProps={{ style: { color: 'white', borderColor: 'white' } }} 
+          className="w-full max-w-xs"
+        />
+        <Button
+          onClick={handleAddMoney}
+          style={{ backgroundColor: "rgb(202 138 4 / var(--tw-bg-opacity))", color: "white" }}
+          className="px-4 py-2 hover:bg-yellow-700 w-full bg-yellow-600 text-white bg-b-900 rounded-md"
+        >
+          Add Money
+        </Button>
+      </div>
     </div>
   );
 };

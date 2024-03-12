@@ -2,6 +2,8 @@ import React from 'react'
 import Sidebar from '../Components/Sidebar'
 import axios from 'axios';
 import { useEffect } from 'react';
+import Hero from '../Components/Hero';
+
 
 
 
@@ -26,8 +28,7 @@ const Home = () => {
   return (
     <div>
      <Sidebar/>
-      <h1>hell0</h1>
-      
+     <Hero/>
     </div>
   );
 };

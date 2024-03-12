@@ -27,6 +27,7 @@
     "ethers": "^6.11.1",
     "flowbite-react": "^0.7.2",
     "jwt-decode": "^4.0.0",
+    "linaria": "^6.1.0",
     "node-fetch": "^2.7.0",
     "qrcode.react": "^3.1.0",
     "razorpay": "^2.9.2",
